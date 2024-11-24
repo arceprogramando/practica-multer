@@ -12,13 +12,12 @@ router.get('/', (_req, res) => {
 
 router.post('/upload', uploadMiddleware, (req, res) => {
   try {
-    if (!req.file) {
-      res.status(400).send('No file uploaded.');
-      return;
-    }
-    res.send('Uploader');
+    if (!req.file) return res.status(400).send('No file uploaded.'); 
+
+    res.status(200).send({ message: 'Archivo subido correctamente', filename: req.file.filename });
+    
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send({ error: error.message });
   }
 });
 
